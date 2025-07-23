@@ -1,0 +1,33 @@
+Leia o PRD QUE esta em /docs/calculadore_prd.mdr la estao as descricoes necessarias para o desenvolvimento do projeto 
+
+analise o PRD e as informacoes que voce tem para desenvolver o projeto.
+Se necessario busca na internet mais informacoes para complementar e entender melhor o problema para ter  um resultado melhor para aplicacao.
+
+
+faca um plano de implementacao para o desenvolvimento do projeto, com as seguintes informacoes:
+- o que voce vai fazer
+- o que voce vai usar e como
+- o que voce vai testar e como
+- o que voce vai documentar e como
+- o que voce vai publicar e como
+- o que voce vai compartilhar e como
+
+
+
+crie uma lista para  usar como guia de desenvolvimento da aplicacao.
+desenvolva a aplicacao passo a passo, nao saia de uma tarefa até que todas os passos, requistos estejam feitos.
+
+
+** imporante **
+- nao saia de uma tarefa até que todas os passos, requistos estejam feitos.
+- o desenvolvimento deve ser feito em pequenos passos, para que voce possa testar e validar cada passo.
+- o desenvolvimento sera feito inteiramente dentro de containers docker, para que voce possa testar e validar cada passo.
+- o primeiro passo sera criar o container docker para o projeto.
+
+
+O nextjs de ve ser instalado de dentro do container,
+npx create-next-app@latest
+
+Em /files temos arquivos de referencia para o desenvolvimento do projeto. o arquivo excel é uma calculadora que o usuario usa autalemte para fazer os calculos.
+
+o arquvo pdf sao algumas orientacoes que o usuario usa  como guia de entendimento do calculo.

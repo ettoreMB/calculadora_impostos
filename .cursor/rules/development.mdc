@@ -1,5 +1,5 @@
 ---
-description: Development
+description: Development rules for the project
 globs: 
 alwaysApply: true
 ---
@@ -39,6 +39,10 @@ function calcularValorBruto(valorLiquido, percentualTotal) {
 ## 🐳 2. Uso obrigatório de Docker e Docker Compose
 
 A aplicação **deve ser executada via Docker**, utilizando obrigatoriamente um `Dockerfile` e um `docker-compose.yml`. Nenhuma dependência será instalada diretamente na máquina do desenvolvedor.
+
+Comandos de instalacao de dependencias devem ser feitas de dentro do container.
+
+Toda a aplicacao deve ser feita de dentro do container, nao deve ser feita na maquina do desenvolvedor.
 
 ### ▶️ Comando padrão para execução:
 
@@ -123,6 +127,12 @@ const dados = calculoSchema.parse({
 - A lógica de cálculo dos impostos deve estar isolada em arquivos dentro de `lib/` ou `services/`.
 
 ---
+
+## 📌 5. Organização por feature
+kebab-case para nomes de pastas e arquivos.
+camelCase para nomes de variaveis e funcoes.
+PascalCase para nomes de classes e interfaces.
+
 
 ## 📌 Resumo
 
