@@ -1,0 +1,141 @@
+---
+description: Development
+globs: 
+alwaysApply: true
+---
+
+# Referncia pastas #
+/docs documentacoes como prd, mdr do projeto
+/files arquivos usados para referencia 
+/tasks arquivos de todo lists e planejamento de desenvolvimento
+
+# 📏 Regras de Desenvolvimento — Calculadora de Impostos (`cursor.rule.md`)
+
+Este documento define as regras obrigatórias que devem ser seguidas durante o desenvolvimento da aplicação **Calculadora de Impostos para Notas Fiscais**.
+
+---
+
+## ✅ 1. Documentação com JSDoc
+
+Todas as funções devem ser documentadas usando o padrão **JSDoc**, mesmo as funções auxiliares. Isso garante legibilidade, padronização e suporte a ferramentas automatizadas.
+
+### 📌 Exemplo:
+
+```ts
+/**
+ * Calcula o valor bruto necessário para atingir o valor líquido após os impostos.
+ *
+ * @param {number} valorLiquido - O valor líquido que o usuário deseja receber.
+ * @param {number} percentualTotal - A soma dos percentuais de impostos aplicáveis.
+ * @returns {number} O valor bruto que deverá constar na nota fiscal.
+ */
+function calcularValorBruto(valorLiquido, percentualTotal) {
+  return valorLiquido / (1 - percentualTotal / 100);
+}
+```
+
+---
+
+## 🐳 2. Uso obrigatório de Docker e Docker Compose
+
+A aplicação **deve ser executada via Docker**, utilizando obrigatoriamente um `Dockerfile` e um `docker-compose.yml`. Nenhuma dependência será instalada diretamente na máquina do desenvolvedor.
+
+### ▶️ Comando padrão para execução:
+
+```bash
+docker-compose up --build
+```
+
+### 📦 Exemplo de `docker-compose.yml`:
+
+```yaml
+version: "3.8"
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=development
+    command: sh -c "npm install && npm run dev"
+```
+
+### 🐋 Exemplo de `Dockerfile`:
+
+```Dockerfile
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+```
+
+---
+
+## 🧪 3. Validação com Zod
+
+A validação de **todos os inputs do usuário** deve ser feita com a biblioteca [Zod](https://zod.dev/). Não utilizar outras bibliotecas como `Yup` ou validações manuais com `if`.
+
+### 📦 Instalação:
+
+```bash
+npm install zod
+```
+
+### 📌 Exemplo de schema:
+
+```ts
+import { z } from "zod";
+
+const calculoSchema = z.object({
+  valorLiquido: z.number().positive(),
+  regimeTributario: z.enum(["MEI", "Simples", "LucroPresumido"]),
+});
+
+// Validação
+const dados = calculoSchema.parse({
+  valorLiquido: 5000,
+  regimeTributario: "Simples",
+});
+```
+
+> 🛡️ Sempre preferir `.parse()` para validação direta ou `.safeParse()` para tratamento de erros.
+
+---
+
+## 🧭 4. Convenções Gerais
+
+- A aplicação será feita com **Next.js** (última versão).
+- O design será feito com **shadcn/ui** + **TailwindCSS**.
+- Todo o código será escrito em **TypeScript**.
+- Utilizar padrão de pastas por **features** (ex: `features/calculadora`, `features/impostos`).
+- O código deve passar pelas validações de **ESLint** e **Prettier**.
+- A lógica de cálculo dos impostos deve estar isolada em arquivos dentro de `lib/` ou `services/`.
+
+---
+
+## 📌 Resumo
+
+| Requisito                      | Obrigatório? | Observação                                  |
+|-------------------------------|--------------|----------------------------------------------|
+| JSDoc para todas as funções   | ✅           | Sempre usar                                  |
+| Docker e Docker Compose       | ✅           | Nada de `npm install` local                  |
+| Validação com Zod             | ✅           | Nunca usar `Yup`, `Joi`, etc.                |
+| Next.js + shadcn/ui           | ✅           | Última versão                                |
+| TypeScript                    | ✅           | Padrão em todos os arquivos                  |
+| ESLint + Prettier             | ✅           | Para padronização de código                  |
+| Organização por feature       | ✅           | Arquitetura escalável                        |
+
+---
+
+_Fim do arquivo._
